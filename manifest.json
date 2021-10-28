@@ -1,5 +1,5 @@
 {
-    "name": "YNU-LMS Dark-Mode",
+    "name": "YNU-LMS Check-Task",
     "manifest_version": 3,
     "version": "1.0.1",
     "description": "This extension change YNU-LMS's theme to dark",
@@ -9,39 +9,10 @@
     "content_scripts": [
         {
             "matches": [
-                "https://lms.ynu.ac.jp/lms/lginLgir/"
+                "https://lms.ynu.ac.jp/lms/homeHoml/"
             ],
-            "css": ["css/linkKougi.css"]
-        },
-        {
-            "matches": [
-                "https://lms.ynu.ac.jp/lms/error/notLogin"
-            ],
-            "css": ["css/linkKougi.css"]
-        },
-        {
-            "matches": [
-                "https://lms.ynu.ac.jp/lms/homeHoml/",
-                "https://lms.ynu.ac.jp/lms/infrInfr/back"
-            ],
-            "js": ["js/main.js"],
-            "css": ["css/style.css"]
-        },
-        {
-            "matches": [
-                "https://lms.ynu.ac.jp/lms/corsColl/linkKyozaiTitle*",
-                "https://lms.ynu.ac.jp/lms/corsColl/linkKyozaiTitle?kyozaiId=REP0000000814311&kyozaiSyCdHidden=.*",
-                "https://lms.ynu.ac.jp/lms/rptsRptc/"
-            ],
-            "css": ["css/linkKyozaiTitle.css"]
-        },
-        {
-            "matches": [
-              "https://lms.ynu.ac.jp/lms/homeHoml/linkKougi",
-              "https://lms.ynu.ac.jp/lms/corsColl/",
-              "https://lms.ynu.ac.jp/lms/infrInfr/.*"
-            ],
-            "css": ["css/linkKougi.css"]
+            "css": ["css/style.css"],
+            "js": ["js/main.js"]
         }
     ],
     "background": {
