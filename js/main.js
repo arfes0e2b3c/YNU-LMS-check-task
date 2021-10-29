@@ -127,7 +127,7 @@ async function getInfoId(){
   const homeHtmlString = await homeResponse.text();
   const parser = new DOMParser();
   const homeDocument = parser.parseFromString(homeHtmlString, "text/html");
-  const infoAnchorTags = homeDocument.getElementById("cs_mainInfo").getElementsByTagName("p")[1].nextElementSibling.getElementsByTagName("a");
+  const infoAnchorTags = homeDocument.getElementById("cs_mainInfo").getElementsByTagName("p")[2].nextElementSibling.getElementsByTagName("a");
   console.log(infoAnchorTags);
   for(const tag of infoAnchorTags){
     if(tag.innerText.includes("レポート提出期限通知")){
