@@ -1,3 +1,12 @@
+// a();
+// async function a(){
+//   const homeUrl = "https://lms.ynu.ac.jp/lms/infrInfl/?infType=03";
+//   const homeResponse = await fetch(homeUrl);
+//   const homeHtmlString = await homeResponse.text();
+//   const parser = new DOMParser();
+//   const homeDocument = parser.parseFromString(homeHtmlString, "text/html");
+//   console.log(homeDocument);
+// }
 const STORAGE_KEY = 'info';
 
 injectHeader();
@@ -5,8 +14,15 @@ injectHeader();
 // メイン処理
 (async () => {
   const cachedData = getFromStorage();
-  const todayFiveClock = new Date().setHours(5, 0, 0, 0);
-  if (cachedData && cachedData.unixTime > todayFiveClock) {
+
+  //最後にデータを取得した時刻から数えて最初の午前５時を取得
+  let unixTime = new Date(cachedData.unixTime);
+  unixTime.setHours(unixTime.getHours() + 19);
+  const limitDate = unixTime.setHours(5,0,0,0);
+
+  const now = Date.now();
+  //localStorage上にデータが存在し、現在時刻が最後にデータを取得した時刻から数えて最初の午前５時を過ぎていなければLocalStorageからデータを取得する。その他ならロード。
+  if (cachedData && now <= limitDate) {
     const homeworks = cachedData.homeworks;
     injectTable(homeworks);
   }
@@ -66,13 +82,14 @@ function getFromStorage() {
 }
 
 function saveToStorage(homeworks) {
-  const unixTime = Date.now();
+  const unixTime = new Date();
+  console.log(unixTime+'unixTime');
   const data = {
       "homeworks": homeworks,
       "unixTime": unixTime
   };
   const jsonData = JSON.stringify(data);
-  localStorage.setItem(STORAGE_KEY, jsonData);
+  // localStorage.setItem(STORAGE_KEY, jsonData);
 }
 function injectTable(homeworks) {
   const parent = document.querySelector("#homework_list");
@@ -121,8 +138,10 @@ function injectTable(homeworks) {
   parent.appendChild(marginDiv);
 }
 
+//通知のIDを取得
 async function getInfoId(){
   const homeUrl = "https://lms.ynu.ac.jp/lms/homeHoml";
+  // const homeUrl = "https://lms.ynu.ac.jp/lms/infrinfl?infType=03";
   const homeResponse = await fetch(homeUrl);
   const homeHtmlString = await homeResponse.text();
   const parser = new DOMParser();
@@ -141,6 +160,7 @@ async function getInfoId(){
   }
   // return 'INF0000007120924';
 }
+//IDから通知の本文、DOMを取得
 async function getInfoText(infoId){
   if(!infoId){
     return;
